@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026年马年财运测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 16px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #d4a017, #ffcc33);
+            color: #8b4513;
+            padding: 24px 20px;
+            text-align: center;
+            border-bottom: 3px solid #8b4513;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            background: #f8f3e9;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #e8d9b5;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 8px;
+            background: #e8d9b5;
+            border-radius: 4px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #d4a017, #ffcc33);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .quiz-container {
+            padding: 0;
+        }
+
+        .quiz-section {
+            display: block;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-section.hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #8b4513;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0e6d2;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #d4a017;
+        }
+
+        .question {
+            margin-bottom: 24px;
+            padding: 18px;
+            background: #f9f5ed;
+            border-radius: 12px;
+            border-left: 4px solid #d4a017;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 160, 23, 0.1);
+        }
+
+        .question p {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: #5a4a3a;
+            font-weight: 600;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            background: white;
+            border: 2px solid #e8d9b5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #d4a017;
+            background: #fffdf6;
+        }
+
+        .option.selected {
+            border-color: #d4a017;
+            background: #fff8e1;
+            box-shadow: 0 4px 12px rgba(212, 160, 23, 0.15);
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-custom {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #d4a017;
+            border-radius: 50%;
+            margin-right: 14px;
+            position: relative;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .option.selected .radio-custom::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #d4a017;
+            border-radius: 50%;
+        }
+
+        .option-label {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #5a4a3a;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e8d9b5;
+        }
+
+        .btn {
+            padding: 16px 28px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 140px;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-prev {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .btn-next {
+            background: linear-gradient(90deg, #d4a017, #ffcc33);
+            color: white;
+            box-shadow: 0 4px 12px rgba(212, 160, 23, 0.3);
+        }
+
+        .btn-next:active {
+            box-shadow: 0 2px 8px rgba(212, 160, 23, 0.3);
+        }
+
+        .result-container {
+            padding: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 20px;
+            border: 2px solid #f0e6d2;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0e6d2;
+        }
+
+        .result-header h3 {
+            font-size: 1.5rem;
+            color: #8b4513;
+            margin-bottom: 8px;
+        }
+
+        .score-display {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #d4a017;
+            margin: 10px 0;
+        }
+
+        .score-total {
+            font-size: 1rem;
+            color: #999;
+            margin-left: 5px;
+        }
+
+        .result-content {
+            margin-top: 20px;
+        }
+
+        .result-item {
+            margin-bottom: 24px;
+        }
+
+        .result-item h4 {
+            font-size: 1.2rem;
+            color: #8b4513;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-item p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .fortune-type {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #d4a017;
+            margin: 20px 0;
+        }
+
+        .fortune-type h4 {
+            color: #8b4513;
+            margin-bottom: 10px;
+        }
+
+        .fortune-type p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #d4a017;
+        }
+
+        .final-result {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 30px 24px;
+            border-radius: 16px;
+            margin-top: 24px;
+            text-align: center;
+            border: 2px solid #e8d9b5;
+        }
+
+        .final-result h2 {
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+        }
+
+        .final-result p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .horseshoe {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #d4a017;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .progress-container {
+                padding: 14px 16px;
+            }
+
+            .quiz-section {
+                padding: 16px;
+            }
+
+            .question {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .question p {
+                font-size: 1.05rem;
+            }
+
+            .option {
+                padding: 12px 14px;
+                margin-bottom: 10px;
+            }
+
+            .option-label {
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 14px 24px;
+                min-width: 120px;
+                font-size: 0.95rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .result-card {
+                padding: 20px 16px;
+            }
+
+            .final-result {
+                padding: 24px 16px;
+            }
+
+            .final-result h2 {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* 非常小的屏幕 */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .question p {
+                font-size: 1rem;
+            }
+
+            .option {
+                padding: 10px 12px;
+            }
+
+            .option-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 防止文本选中 */
+        .option,
+        .btn {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* 修复iOS Safari的按钮样式 */
+        button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 10px;
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .hint {
+            text-align: center;
+            color: #d4a017;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #fff8e1;
+            border-radius: 8px;
+        }
+
+        /* 加载动画 */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .spinner {
+            border: 3px solid #f0e6d2;
+            border-top: 3px solid #d4a017;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 新增图表样式 */
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin: 30px auto;
+        }
+
+        .chart-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .chart-card {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-title {
+            text-align: center;
+            color: #8b4513;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐎 2026年马年财运测试</h1>
+            <p>完成测试，获取您的专属财运分析</p>
+        </div>
+
+        <div class="progress-container">
+            <span id="stepIndicator">第一轮 1/10</span>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <span id="stepCount">第1题</span>
+        </div>
+
+        <div class="quiz-container">
+            <!-- 第一部分 -->
+            <div class="quiz-section active" id="part1">
+                <h2 class="section-title"><i class="fas fa-coins"></i> 第一轮：财务规划与观念</h2>
+
+                <div class="question" data-question="1">
+                    <p><strong>1. 在2026年年初，你更倾向于如何规划财务？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 制定详细收支计划，严格执行</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 大致有个方向，灵活调整</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 先多赚钱，规划之后再说</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 相信直觉，顺势而为</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="2">
+                    <p><strong>2. 你认为2026年对你来说，主要的财富机会更可能来自？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 本职工作或加薪</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 投资理财或副业</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 合作与人脉带来的机会</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 意外惊喜或礼物</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="3">
+                    <p><strong>3. 如果有一笔额外收入，你第一时间会怎么处理？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 存起来或还贷</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 投资自己（学习、健康）</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 购买心仪已久的东西</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 请客分享或给家人</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="4">
+                    <p><strong>4. 面对一项有风险但可能高回报的投资，你会？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 彻底研究后再谨慎尝试</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 小金额试试水</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 跟随信任的朋友或专家</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 回避，更看重资金安全</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="5">
+                    <p><strong>5. 2026年，你更可能在哪种消费上超支？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 家庭用品或房产相关</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 社交应酬或人情往来</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 个人爱好或奢侈体验</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 健康医疗或保险</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="6">
+                    <p><strong>6. 关于"借钱给朋友"，你在2026年的态度是？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 坚决不借，避免纠纷</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 只借小金额，不指望还</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 看情况，要有借条</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 大方借出，信任朋友</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="7">
+                    <p><strong>7. 在职场中，2026年你的财富增长关键靠？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 踏实努力，等待晋升</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 主动争取新项目或跳槽</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 拓展人脉，寻找贵人</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 发展副业，多条腿走路</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="8">
+                    <p><strong>8. 你2026年的偏财运可能体现在？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 抽奖、红包等小运气</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 股票、基金等投资获利</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 二手闲置转卖收益</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 合作分红或他人馈赠</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="9">
+                    <p><strong>9. 遇到财务压力时，你最先会？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 削减开支，节流为先</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 寻找兼职或增收途径</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 向家人或朋友求助</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 保持乐观，等待转机</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="10">
+                    <p><strong>10. 你认为2026年财运最好的季节是？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 春季（1-3月）</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 夏季（4-6月）</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 秋季（7-9月）</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 冬季（10-12月）</div>
+                    </div>
+                </div>
+
+                <div class="hint">👆 点击选项选择答案，完成所有题目后提交</div>
+
+                <div class="button-group">
+                    <button class="btn btn-next" onclick="submitPart1()">
+                        提交第一轮 <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 第一部分结果 -->
+            <div class="quiz-section hidden" id="part1Result">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3>第一轮测试结果</h3>
+                        <div class="score-display">
+                            <span id="score1">0</span><span class="score-total">/ 30 分</span>
+                        </div>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="result-item">
+                            <h4><i class="fas fa-chart-line"></i> 初步分析</h4>
+                            <p id="analysis1">分析内容加载中...</p>
+                        </div>
+
+                        <div class="fortune-type">
+                            <h4><i class="fas fa-lightbulb"></i> 财运提示</h4>
+                            <p>请继续完成第二轮测试以获得完整财运解读</p>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-prev" onclick="restartQuiz()">
+                            <i class="fas fa-redo"></i> 重新测试
+                        </button>
+                        <button class="btn btn-next" onclick="showPart2()">
+                            进入第二轮 <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二部分 -->
+            <div class="quiz-section hidden" id="part2">
+                <h2 class="section-title"><i class="fas fa-chart-pie"></i> 第二轮：投资与财运直觉</h2>
+
+                <div class="question" data-question="11">
+                    <p><strong>11. 你如何看待2026年房产或大宗资产配置？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 谨慎观望，不轻易变动</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 如果有好机会就出手</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 优先优化现有资产</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 不关心这个领域</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="12">
+                    <p><strong>12. 在理财知识学习上，2026年你会？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 系统学习一门课程</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 碎片化阅读财经资讯</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 跟随信任的理财博主</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 暂时不学习，凭经验</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="13">
+                    <p><strong>13. 朋友邀请你参与一个新创业项目，你会？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 理性分析后再决定</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 热情参与并投入资金</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 只帮忙，不投钱</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 婉拒，专注现有事务</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="14">
+                    <p><strong>14. 2026年，你更可能因为什么破财？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 突发开销或维修</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 人情往来或请客</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 投资失误</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 冲动消费</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="15">
+                    <p><strong>15. 你对2026年整体财运的直觉是？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 稳步上升</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 波动中求发展</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 先抑后扬</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 平平淡淡</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="16">
+                    <p><strong>16. 如果有贵人助你财运，你认为他更可能是？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 年长的长辈或上级</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 同龄朋友或同事</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 合作伙伴或客户</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 陌生人或新认识的人</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="17">
+                    <p><strong>17. 2026年，你的消费观念更偏向？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 性价比优先</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 品质优先</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 喜欢就买，开心重要</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 极简主义，减少消费</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="18">
+                    <p><strong>18. 对于保险和应急储备金，2026年你的做法是？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 检查并补齐保障</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 维持现状</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 觉得不太必要</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 增加储备以防万一</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="19">
+                    <p><strong>19. 你相信2026年财运与风水或吉祥物有关吗？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 相信并会布置</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 宁可信其有，随意放一个</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 只当心理安慰</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 完全不信</div>
+                    </div>
+                </div>
+
+                <div class="question" data-question="20">
+                    <p><strong>20. 2026年年底，你希望自己的财务状况达成？</strong></p>
+                    <div class="option" data-value="3">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">A. 存款明显增加</div>
+                    </div>
+                    <div class="option" data-value="2">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">B. 负债减少</div>
+                    </div>
+                    <div class="option" data-value="1">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">C. 投资获利丰厚</div>
+                    </div>
+                    <div class="option" data-value="0">
+                        <div class="radio-custom"></div>
+                        <div class="option-label">D. 收入来源多样化</div>
+                    </div>
+                </div>
+
+                <div class="hint">👆 点击选项选择答案，完成所有题目后提交</div>
+
+                <div class="button-group">
+                    <button class="btn btn-prev" onclick="backToPart1Result()">
+                        <i class="fas fa-arrow-left"></i> 返回上一轮
+                    </button>
+                    <button class="btn btn-next" onclick="submitPart2()">
+                        提交第二轮 <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 最终结果 -->
+            <div class="quiz-section hidden" id="finalResult">
+                <div class="final-result">
+                    <div class="horseshoe">🐎</div>
+                    <h2>2026年马年财运测试结果</h2>
+
+                    <div class="loading" id="resultLoading">
+                        <div class="spinner"></div>
+                        <p>正在生成您的专属财运分析...</p>
+                    </div>
+
+                    <div id="resultContent" style="display: none;">
+                        <p><strong>总分：</strong> <span id="totalScore"
+                                style="font-weight: bold; color: #d4a017;">0</span> / 60 分</p>
+
+                        <div class="fortune-type" style="margin: 20px 0;">
+                            <h4><i class="fas fa-crown"></i> 财运类型</h4>
+                            <p id="fortuneType" style="font-size: 1.3rem;">加载中...</p>
+                        </div>
+
+                        <!-- 新增图表展示区域 -->
+                        <div class="chart-row">
+                            <div class="chart-card">
+                                <h4 class="chart-title">各部分得分对比</h4>
+                                <div class="chart-container">
+                                    <canvas id="scoreComparisonChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="chart-card">
+                                <h4 class="chart-title">财运类型分布</h4>
+                                <div class="chart-container">
+                                    <canvas id="fortuneTypeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-row">
+                            <div class="chart-card">
+                                <h4 class="chart-title">财务规划倾向</h4>
+                                <div class="chart-container">
+                                    <canvas id="planningTendencyChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="chart-card">
+                                <h4 class="chart-title">投资风险偏好</h4>
+                                <div class="chart-container">
+                                    <canvas id="riskPreferenceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-item">
+                            <h4><i class="fas fa-file-alt"></i> 详细解读</h4>
+                            <p id="fortuneAnalysis">加载中...</p>
+                        </div>
+
+                        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed #e8d9b5;">
+                            <p><i class="fas fa-gift" style="color: #d4a017;"></i> 祝您2026年马到成功，财源广进！</p>
+                        </div>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 30px;">
+                        <button class="btn btn-prev" onclick="restartQuiz()" style="width: 100%;">
+                            <i class="fas fa-redo"></i> 重新测试
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 马年财运测试 | 本测试仅供娱乐参考，实际财运还需个人努力</p>
+    </footer>
+
+    <script>
+        // 全局变量
+        let part1Score = 0;
+        let part2Score = 0;
+        let selectedOptions = {};
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function () {
+            // 添加选项点击事件
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function () {
+                    selectOption(this);
+                });
+
+                // 添加触摸反馈
+                option.addEventListener('touchstart', function () {
+                    this.classList.add('active');
+                });
+
+                option.addEventListener('touchend', function () {
+                    this.classList.remove('active');
+                });
+            });
+
+            // 初始化进度条
+            updateProgress();
+
+            // 初始化已选择的答案
+            loadSavedAnswers();
+        });
+
+        // 选择选项
+        function selectOption(optionElement) {
+            const questionElement = optionElement.closest('.question');
+            const questionId = questionElement.getAttribute('data-question');
+            const value = optionElement.getAttribute('data-value');
+
+            // 移除同一问题下的其他选项的选中状态
+            const siblings = questionElement.querySelectorAll('.option');
+            siblings.forEach(sibling => {
+                sibling.classList.remove('selected');
+            });
+
+            // 标记当前选项为选中状态
+            optionElement.classList.add('selected');
+
+            // 保存答案
+            selectedOptions[questionId] = parseInt(value);
+
+            // 更新进度条
+            updateProgress();
+
+            // 保存到本地存储
+            saveAnswers();
+        }
+
+        // 保存答案到本地存储
+        function saveAnswers() {
+            try {
+                localStorage.setItem('fortuneQuizAnswers', JSON.stringify(selectedOptions));
+            } catch (e) {
+                // 忽略本地存储错误
+            }
+        }
+
+        // 从本地存储加载答案
+        function loadSavedAnswers() {
+            try {
+                const saved = localStorage.getItem('fortuneQuizAnswers');
+                if (saved) {
+                    selectedOptions = JSON.parse(saved);
+
+                    // 恢复已选择的选项
+                    Object.keys(selectedOptions).forEach(questionId => {
+                        const questionElement = document.querySelector(`.question[data-question="${questionId}"]`);
+                        if (questionElement) {
+                            const value = selectedOptions[questionId];
+                            const optionElement = questionElement.querySelector(`.option[data-value="${value}"]`);
+                            if (optionElement) {
+                                optionElement.classList.add('selected');
+                            }
+                        }
+                    });
+
+                    updateProgress();
+                }
+            } catch (e) {
+                // 忽略本地存储错误
+            }
+        }
+
+        // 更新进度条
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const stepIndicator = document.getElementById('stepIndicator');
+            const stepCount = document.getElementById('stepCount');
+
+            // 获取当前活动部分
+            let currentPart = 1;
+            let answeredCount = 0;
+            let totalQuestions = 10;
+
+            if (document.getElementById('part1').classList.contains('active')) {
+                currentPart = 1;
+                totalQuestions = 10;
+            } else if (document.getElementById('part2').classList.contains('active')) {
+                currentPart = 2;
+                totalQuestions = 10;
+            }
+
+            // 计算已回答的问题数量
+            for (let i = (currentPart - 1) * 10 + 1; i <= currentPart * 10; i++) {
+                if (selectedOptions[i] !== undefined) {
+                    answeredCount++;
+                }
+            }
+
+            // 更新进度条
+            const progressPercent = (answeredCount / totalQuestions) * 100;
+            progress.style.width = progressPercent + '%';
+
+            // 更新指示器文本
+            stepIndicator.textContent = currentPart === 1 ? `第一轮 ${answeredCount}/10` : `第二轮 ${answeredCount}/10`;
+            stepCount.textContent = `第${answeredCount === 0 ? '1' : answeredCount}题`;
+        }
+
+        // 提交第一部分
+        function submitPart1() {
+            // 检查是否已回答所有问题
+            let allAnswered = true;
+            for (let i = 1; i <= 10; i++) {
+                if (selectedOptions[i] === undefined) {
+                    allAnswered = false;
+                    // 高亮未回答的问题
+                    const questionElement = document.querySelector(`.question[data-question="${i}"]`);
+                    questionElement.style.borderLeftColor = '#ff4757';
+                    questionElement.style.animation = 'none';
+                    questionElement.offsetHeight; // 触发重排
+                    questionElement.style.animation = 'fadeIn 0.8s ease';
+
+                    // 3秒后恢复
+                    setTimeout(() => {
+                        questionElement.style.borderLeftColor = '#d4a017';
+                    }, 3000);
+                }
+            }
+
+            if (!allAnswered) {
+                alert('请先回答所有题目再提交！');
+                return;
+            }
+
+            // 计算分数
+            part1Score = 0;
+            for (let i = 1; i <= 10; i++) {
+                part1Score += selectedOptions[i] || 0;
+            }
+
+            // 显示分数和初步分析
+            document.getElementById('score1').textContent = part1Score;
+
+            let analysis = '';
+            if (part1Score >= 25) {
+                analysis = '你注重规划，财务基础扎实，2026年正财稳固。通过详细的收支计划和严格执行，你能够有效管理财务，避免不必要的开支。';
+            } else if (part1Score >= 15) {
+                analysis = '你灵活应变，财运机会较多，需主动把握。你的财务观念较为开放，愿意尝试新的收入来源，但需要注意风险控制。';
+            } else {
+                analysis = '你更随性，财运可能依赖机遇，注意意外开支。你的财务管理较为随意，可能更多依赖直觉和机会，建议增加一些规划性。';
+            }
+
+            document.getElementById('analysis1').textContent = analysis;
+
+            // 切换到第一部分结果
+            document.getElementById('part1').classList.remove('active');
+            document.getElementById('part1').classList.add('hidden');
+            document.getElementById('part1Result').classList.remove('hidden');
+            document.getElementById('part1Result').classList.add('active');
+
+            // 更新进度条
+            document.getElementById('stepIndicator').textContent = '第一轮完成';
+            document.getElementById('stepCount').textContent = '等待进入第二轮';
+            document.getElementById('progress').style.width = '100%';
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 显示第二部分
+        function showPart2() {
+            document.getElementById('part1Result').classList.remove('active');
+            document.getElementById('part1Result').classList.add('hidden');
+            document.getElementById('part2').classList.remove('hidden');
+            document.getElementById('part2').classList.add('active');
+
+            // 更新进度条
+            updateProgress();
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 返回到第一部分结果
+        function backToPart1Result() {
+            document.getElementById('part2').classList.remove('active');
+            document.getElementById('part2').classList.add('hidden');
+            document.getElementById('part1Result').classList.remove('hidden');
+            document.getElementById('part1Result').classList.add('active');
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 提交第二部分
+        function submitPart2() {
+            // 检查是否已回答所有问题
+            let allAnswered = true;
+            for (let i = 11; i <= 20; i++) {
+                if (selectedOptions[i] === undefined) {
+                    allAnswered = false;
+                    // 高亮未回答的问题
+                    const questionElement = document.querySelector(`.question[data-question="${i}"]`);
+                    questionElement.style.borderLeftColor = '#ff4757';
+                    questionElement.style.animation = 'none';
+                    questionElement.offsetHeight; // 触发重排
+                    questionElement.style.animation = 'fadeIn 0.8s ease';
+
+                    // 3秒后恢复
+                    setTimeout(() => {
+                        questionElement.style.borderLeftColor = '#d4a017';
+                    }, 3000);
+                }
+            }
+
+            if (!allAnswered) {
+                alert('请先回答所有题目再提交！');
+                return;
+            }
+
+            // 切换到最终结果页面
+            document.getElementById('part2').classList.remove('active');
+            document.getElementById('part2').classList.add('hidden');
+            document.getElementById('finalResult').classList.remove('hidden');
+            document.getElementById('finalResult').classList.add('active');
+
+            // 显示加载动画
+            document.getElementById('resultLoading').style.display = 'block';
+            document.getElementById('resultContent').style.display = 'none';
+
+            // 模拟加载延迟
+            setTimeout(() => {
+                // 计算第二部分分数
+                part2Score = 0;
+                for (let i = 11; i <= 20; i++) {
+                    part2Score += selectedOptions[i] || 0;
+                }
+
+                const totalScore = part1Score + part2Score;
+
+                // 显示最终结果
+                document.getElementById('totalScore').textContent = totalScore;
+
+                let type = '', analysis = '';
+                if (totalScore >= 50) {
+                    type = '🏆 稳健积累型';
+                    analysis = '2026年你的财运以"守"为主，通过规划与积累稳步增长。适合储蓄、定期理财，避免高风险投资。职场正财是主要来源，年底会有可观的盈余。春季财运较旺，可把握时机进行长期规划。';
+                } else if (totalScore >= 40) {
+                    type = '🚀 灵活进取型';
+                    analysis = '财运机会较多，但需要主动把握。适合开展副业、尝试稳健投资，多与人合作。注意控制冲动消费，财运可能年中开始上扬。夏季可能会有不错的投资机会出现。';
+                } else if (totalScore >= 30) {
+                    type = '🤝 人际助力型';
+                    analysis = '财运与人脉紧密相关。多交朋友、维护关系会带来意外机会。避免借钱给人，专注通过合作获利。偏财运不错，可关注红包、礼物等小惊喜。秋季贵人运最强。';
+                } else if (totalScore >= 20) {
+                    type = '🎲 直觉随缘型';
+                    analysis = '财运起伏较大，更多跟随直觉与时机。适合短线、小额投资，见好就收。注意突发开支，保持乐观心态，下半年可能有意外收获。冬季财运较佳。';
+                } else {
+                    type = '☯️ 平和知足型';
+                    analysis = '财运平稳，你对物质追求较为淡泊。适合减少不必要的消费，专注生活质量而非财富数字。健康即是财，避免财务压力，安心度过马年。全年财运平稳，无大起大落。';
+                }
+
+                document.getElementById('fortuneType').textContent = type;
+                document.getElementById('fortuneAnalysis').textContent = analysis;
+
+                // 隐藏加载动画，显示结果
+                document.getElementById('resultLoading').style.display = 'none';
+                document.getElementById('resultContent').style.display = 'block';
+
+                // 生成图表
+                generateCharts(totalScore);
+
+                // 清除本地存储
+                try {
+                    localStorage.removeItem('fortuneQuizAnswers');
+                } catch (e) {
+                    // 忽略错误
+                }
+            }, 1500);
+
+            // 更新进度条
+            document.getElementById('stepIndicator').textContent = '测试完成';
+            document.getElementById('stepCount').textContent = '查看结果';
+            document.getElementById('progress').style.width = '100%';
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 重新开始测试
+        function restartQuiz() {
+            // 重置所有状态
+            part1Score = 0;
+            part2Score = 0;
+            selectedOptions = {};
+
+            // 清除所有选择
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // 隐藏所有部分，显示第一部分
+            document.querySelectorAll('.quiz-section').forEach(section => {
+                section.classList.remove('active');
+                section.classList.add('hidden');
+            });
+
+            document.getElementById('part1').classList.remove('hidden');
+            document.getElementById('part1').classList.add('active');
+
+            // 重置进度条
+            updateProgress();
+
+            // 清除本地存储
+            try {
+                localStorage.removeItem('fortuneQuizAnswers');
+            } catch (e) {
+                // 忽略错误
+            }
+
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+
+        // 新增图表生成函数
+        function generateCharts(totalScore) {
+            // 各部分得分对比图
+            const scoreComparisonCtx = document.getElementById('scoreComparisonChart').getContext('2d');
+            new Chart(scoreComparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['财务规划', '财富机会', '额外收入', '投资风险', '消费倾向', '借贷态度', '职场财富', '偏财运', '财务压力', '财运季节'],
+                    datasets: [{
+                        label: '得分',
+                        data: [
+                            selectedOptions[1] || 0,
+                            selectedOptions[2] || 0,
+                            selectedOptions[3] || 0,
+                            selectedOptions[4] || 0,
+                            selectedOptions[5] || 0,
+                            selectedOptions[6] || 0,
+                            selectedOptions[7] || 0,
+                            selectedOptions[8] || 0,
+                            selectedOptions[9] || 0,
+                            selectedOptions[10] || 0
+                        ],
+                        backgroundColor: [
+                            'rgba(212, 160, 23, 0.7)',
+                            'rgba(139, 69, 19, 0.7)',
+                            'rgba(233, 196, 106, 0.7)',
+                            'rgba(231, 111, 81, 0.7)',
+                            'rgba(244, 162, 97, 0.7)',
+                            'rgba(42, 157, 143, 0.7)',
+                            'rgba(233, 196, 106, 0.7)',
+                            'rgba(38, 70, 83, 0.7)',
+                            'rgba(231, 111, 81, 0.7)',
+                            'rgba(244, 162, 97, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(212, 160, 23, 1)',
+                            'rgba(139, 69, 19, 1)',
+                            'rgba(233, 196, 106, 1)',
+                            'rgba(231, 111, 81, 1)',
+                            'rgba(244, 162, 97, 1)',
+                            'rgba(42, 157, 143, 1)',
+                            'rgba(233, 196, 106, 1)',
+                            'rgba(38, 70, 83, 1)',
+                            'rgba(231, 111, 81, 1)',
+                            'rgba(244, 162, 97, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 3
+                        }
+                    }
+                }
+            });
+
+            // 财运类型分布图
+            const fortuneTypeCtx = document.getElementById('fortuneTypeChart').getContext('2d');
+            new Chart(fortuneTypeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['稳健积累型', '灵活进取型', '人际助力型', '直觉随缘型', '平和知足型'],
+                    datasets: [{
+                        data: [20, 30, 25, 15, 10],
+                        backgroundColor: [
+                            'rgba(212, 160, 23, 0.7)',
+                            'rgba(139, 69, 19, 0.7)',
+                            'rgba(233, 196, 106, 0.7)',
+                            'rgba(231, 111, 81, 0.7)',
+                            'rgba(244, 162, 97, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(212, 160, 23, 1)',
+                            'rgba(139, 69, 19, 1)',
+                            'rgba(233, 196, 106, 1)',
+                            'rgba(231, 111, 81, 1)',
+                            'rgba(244, 162, 97, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // 财务规划倾向图
+            const planningTendencyCtx = document.getElementById('planningTendencyChart').getContext('2d');
+            new Chart(planningTendencyCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['规划性', '灵活性', '冒险精神', '保守态度', '社交影响'],
+                    datasets: [{
+                        label: '您的倾向',
+                        data: [
+                            selectedOptions[1] || 0,
+                            3 - (selectedOptions[1] || 0),
+                            selectedOptions[4] || 0,
+                            3 - (selectedOptions[4] || 0),
+                            selectedOptions[6] || 0
+                        ],
+                        backgroundColor: 'rgba(212, 160, 23, 0.2)',
+                        borderColor: 'rgba(212, 160, 23, 1)',
+                        pointBackgroundColor: 'rgba(212, 160, 23, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(212, 160, 23, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 3
+                        }
+                    }
+                }
+            });
+
+            // 投资风险偏好图
+            const riskPreferenceCtx = document.getElementById('riskPreferenceChart').getContext('2d');
+            new Chart(riskPreferenceCtx, {
+                type: 'polarArea',
+                data: {
+                    labels: ['风险研究', '小额尝试', '跟随专家', '回避风险'],
+                    datasets: [{
+                        data: [
+                            selectedOptions[4] === 3 ? 1 : 0,
+                            selectedOptions[4] === 2 ? 1 : 0,
+                            selectedOptions[4] === 1 ? 1 : 0,
+                            selectedOptions[4] === 0 ? 1 : 0
+                        ],
+                        backgroundColor: [
+                            'rgba(212, 160, 23, 0.7)',
+                            'rgba(139, 69, 19, 0.7)',
+                            'rgba(233, 196, 106, 0.7)',
+                            'rgba(231, 111, 81, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(212, 160, 23, 1)',
+                            'rgba(139, 69, 19, 1)',
+                            'rgba(233, 196, 106, 1)',
+                            'rgba(231, 111, 81, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        }
+
+        // 处理窗口大小变化时重绘图表
+        window.addEventListener('resize', function () {
+            if (document.getElementById('finalResult').classList.contains('active')) {
+                const charts = Chart.getChart("scoreComparisonChart");
+                if (charts) {
+                    charts.destroy();
+                    generateCharts(parseInt(document.getElementById('totalScore').textContent));
+                }
+            }
+        });
+
+
+    </script>
+
+    <!-- Font Awesome 图标库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+
+</html>
